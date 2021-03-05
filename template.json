@@ -1,0 +1,28 @@
+{
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "ami_name": "packer-aws-nginx64",
+      "ssh_username": "ubuntu",
+      "instance_type": "t2.micro",
+      "source_ami_filter": {
+         "filters": {
+         "virtualization-type": "hvm",
+         "name": "ubuntu/images/*ubuntu-bionic-*-amd64-server-*",
+         "root-device-type": "ebs"
+         },
+         "owners": ["099720109477"],
+         "most_recent": true
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "inline": ["sudo apt --fix-missing -y update",
+                "sudo apt -y install nginx"
+                ],
+      "timeout": "10m",
+      "type": "shell"
+    }
+  ]
+}
